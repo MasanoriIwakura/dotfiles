@@ -29,6 +29,9 @@ alias dc='docker-compose'
 alias pa='php artisan'
 
 # VIM
-alias v='neovim'
-alias vim='neovim'
+alias v='nvim'
+alias vim='nvim'
+
+# lazygit
+alias lg='lazygit'
 
