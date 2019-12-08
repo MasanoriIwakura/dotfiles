@@ -1,50 +1,12 @@
-"NeoBundle Scripts-----------------------------
-if &compatible
-  set nocompatible               " Be iMproved
-endif
-
-" Required:
-set runtimepath+=/Users/iwakura/.vim/bundle/neobundle.vim/
-
-" Required:
-call neobundle#begin(expand('/Users/iwakura/.vim/bundle'))
-
-" Let NeoBundle manage NeoBundle
-" Required:
-NeoBundleFetch 'Shougo/neobundle.vim'
-
-" Add or remove your Bundles here:
-NeoBundle 'Shougo/neosnippet.vim'
-NeoBundle 'Shougo/neosnippet-snippets'
-NeoBundle 'tpope/vim-fugitive'
-NeoBundle 'ctrlpvim/ctrlp.vim'
-NeoBundle 'flazz/vim-colorschemes'
-NeoBundle 'scrooloose/nerdtree'
-NeoBundle 'stephpy/vim-php-cs-fixer'
-
-" You can specify revision/branch/tag.
-NeoBundle 'Shougo/vimshell', { 'rev' : '3787e5' }
-
-" Required:
-call neobundle#end()
-
-" Required:
-filetype plugin indent on
-
-" If there are uninstalled bundles found on startup,
-" this will conveniently prompt you to install them.
-NeoBundleCheck
-"End NeoBundle Scripts-------------------------
-
 " vim-bootstrap 
 
 "*****************************************************************************
 "" Vim-PLug core
 "*****************************************************************************
-let vimplug_exists=expand('~/.vim/autoload/plug.vim')
+let vimplug_exists=expand('~/.config/nvim/autoload/plug.vim')
 
 let g:vim_bootstrap_langs = "php"
-let g:vim_bootstrap_editor = "vim"				" nvim or vim
+let g:vim_bootstrap_editor = "nvim"				" nvim or vim
 
 if !filereadable(vimplug_exists)
   if !executable("curl")
@@ -60,32 +22,7 @@ if !filereadable(vimplug_exists)
 endif
 
 " Required:
-call plug#begin(expand('~/.vim/plugged'))
-
-"***********************
-" php-cs-fixer settings
-"***********************
-" If php-cs-fixer is in $PATH, you don't need to define line below
-" let g:php_cs_fixer_path = "~/php-cs-fixer.phar" " define the path to the php-cs-fixer.phar
-
-" If you use php-cs-fixer version 1.x
-let g:php_cs_fixer_level = "symfony"                   " options: --level (default:symfony)
-let g:php_cs_fixer_config = "default"                  " options: --config
-" If you want to define specific fixers:
-"let g:php_cs_fixer_fixers_list = "linefeed,short_tag" " options: --fixers
-"let g:php_cs_fixer_config_file = '.php_cs'            " options: --config-file
-" End of php-cs-fixer version 1 config params
-
-" If you use php-cs-fixer version 2.x
-let g:php_cs_fixer_rules = "@PSR2"          " options: --rules (default:@PSR2)
-"let g:php_cs_fixer_cache = ".php_cs.cache" " options: --cache-file
-"let g:php_cs_fixer_config_file = '.php_cs' " options: --config
-" End of php-cs-fixer version 2 config params
-
-let g:php_cs_fixer_php_path = "php"               " Path to PHP
-let g:php_cs_fixer_enable_default_mapping = 1     " Enable the mapping by default (<leader>pcd)
-let g:php_cs_fixer_dry_run = 0                    " Call command with dry-run option
-let g:php_cs_fixer_verbose = 0                    " Return the output of command if 1, else an inline information.
+call plug#begin(expand('~/.config/nvim/plugged'))
 
 "*****************************************************************************
 "" Plug install packages
@@ -106,7 +43,6 @@ Plug 'Yggdroot/indentLine'
 Plug 'avelino/vim-bootstrap-updater'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
-Plug 'phpactor/phpactor', {'for': 'php', 'do': 'composer install'}
 
 if isdirectory('/usr/local/opt/fzf')
   Plug '/usr/local/opt/fzf' | Plug 'junegunn/fzf.vim'
@@ -144,8 +80,8 @@ Plug 'arnaud-lb/vim-php-namespace'
 "*****************************************************************************
 
 "" Include user's extra bundle
-if filereadable(expand("~/.vimrc.local.bundles"))
-  source ~/.vimrc.local.bundles
+if filereadable(expand("~/.config/nvim/local_bundles.vim"))
+  source ~/.config/nvim/local_bundles.vim
 endif
 
 call plug#end()
@@ -161,7 +97,7 @@ filetype plugin indent on
 set encoding=utf-8
 set fileencoding=utf-8
 set fileencodings=utf-8
-set ttyfast
+
 
 "" Fix backspace indent
 set backspace=indent,eol,start
@@ -193,7 +129,7 @@ else
 endif
 
 " session management
-let g:session_directory = "~/.vim/session"
+let g:session_directory = "~/.config/nvim/session"
 let g:session_autoload = "no"
 let g:session_autosave = "no"
 let g:session_command_aliases = 1
@@ -228,20 +164,8 @@ else
   let g:indentLine_faster = 1
 
   
-  if $COLORTERM == 'gnome-terminal'
-    set term=gnome-256color
-  else
-    if $TERM == 'xterm'
-      set term=xterm-256color
-    endif
-  endif
-  
 endif
 
-
-if &term =~ '256color'
-  set t_ut=
-endif
 
 
 "" Disable the blinking cursor.
@@ -301,7 +225,6 @@ let g:NERDTreeShowBookmarks=1
 let g:nerdtree_tabs_focus_on_files=1
 let g:NERDTreeMapOpenInTabSilent = '<RightMouse>'
 let g:NERDTreeWinSize = 50
-let NERDTreeShowHidden=1
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*.pyc,*.db,*.sqlite
 nnoremap <silent> <F2> :NERDTreeFind<CR>
 nnoremap <silent> <F3> :NERDTreeToggle<CR>
@@ -500,8 +423,8 @@ nnoremap <Leader>o :.Gbrowse<CR>
 "*****************************************************************************
 
 "" Include user's local vim config
-if filereadable(expand("~/.vimrc.local"))
-  source ~/.vimrc.local
+if filereadable(expand("~/.config/nvim/local_init.vim"))
+  source ~/.config/nvim/local_init.vim
 endif
 
 "*****************************************************************************
@@ -543,43 +466,3 @@ else
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
 endif
-
-set clipboard+=unnamed
-
-"***************************
-" phpactor settings
-"***************************
-" 画面を分割して定義元へのジャンプ
-function! DefinitionJumpWithPhpactor()
-    split
-    call phpactor#GotoDefinition()
-endfunction
-
-
-" useの補完
-nmap <silent><Leader>u      :<C-u>call phpactor#UseAdd()<CR>
-" コンテキストメニューの起動(カーソル下のクラスやメンバに対して実行可能な選択肢を表示してくれます)
-nmap <silent><Leader>mm     :<C-u>call phpactor#ContextMenu()<CR>
-" ナビゲーションメニューの起動(クラスの参照元を列挙したり、他ファイルへのジャンプなど)
-nmap <silent><Leader>nn     :<C-u>call phpactor#Navigate()<CR>
-" カーソル下のクラスやメンバの定義元にジャンプ
-nmap <silent><Leader>o      :<C-u>call phpactor#GotoDefinition()<CR>
-" 編集中のクラスに対し各種の変更を加える(コンストラクタ補完、インタフェース実装など)
-nmap <silent><Leader>tt     :<C-u>call phpactor#Transform()<CR>
-" 新しいクラスを生成する(編集中のファイルに)
-nmap <silent><Leader>cc     :<C-u>call phpactor#ClassNew()<CR>
-" 選択した範囲を変数に抽出する
-nmap <silent><Leader>ee     :<C-u>call phpactor#ExtractExpression(v:false)<CR>
-" 選択した範囲を変数に抽出する
-vmap <silent><Leader>ee     :<C-u>call phpactor#ExtractExpression(v:true)<CR>
-" 選択した範囲を新たなメソッドとして抽出する
-vmap <silent><Leader>em     :<C-u>call phpactor#ExtractMethod()<CR>
-" split → jump
-nmap <silent><C-w><Leader>o :<C-u>call DefinitionJumpWithPhpactor()<CR>
-" カーソル下のクラスや変数の情報を表示する
-" 他のエディタで、マウスカーソルをおいたときに表示されるポップアップなどに相当
-vmap <silent><Leader>hh     :<C-u>call phpactor#Hover()<CR>
-
-" php-cs-fixer settings
-nnoremap <silent><leader>pcd :call PhpCsFixerFixDirectory()<CR>
-nnoremap <silent><leader>f :call PhpCsFixerFixFile()<CR>
